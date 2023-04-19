@@ -43,8 +43,8 @@ class AlbumService {
         if (!result.rows.length) {
             throw new NotFoundError('Album tidak ditemukan');
         }
-        // return result.rows.map(mapAlbumsDBToModel)[0];
 
+        // mengambil data lagu dengan id album yang sesuai
         const songsQuery = {
             text: 'SELECT * FROM songs WHERE album_id = $1',
             values: [id],
