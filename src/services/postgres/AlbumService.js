@@ -7,7 +7,8 @@ const {
 const InvariantError = require("../../exceptions/InvariantError");
 const NotFoundError = require("../../exceptions/NotFoundError");
 const {
-    mapAlbumsDBToModel
+    mapAlbumsDBToModel,
+    mapSongsDBToModel
 } = require('../../utils');
 
 class AlbumService {
@@ -42,7 +43,20 @@ class AlbumService {
         if (!result.rows.length) {
             throw new NotFoundError('Album tidak ditemukan');
         }
-        return result.rows.map(mapAlbumsDBToModel)[0];
+        // return result.rows.map(mapAlbumsDBToModel)[0];
+
+        const songsQuery = {
+            text: 'SELECT * FROM songs WHERE album_id = $1',
+            values: [id],
+        };
+        const songsResult = await this._pool.query(songsQuery);
+        const songs = songsResult.rows.map(mapSongsDBToModel);
+
+        // menggabungkan data album dan lagu dalam satu objek
+        const album = mapAlbumsDBToModel(result.rows[0]);
+        album.songs = songs;
+
+        return album;
     }
 
     async editAlbumById(id, {
