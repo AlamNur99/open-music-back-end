@@ -28,5 +28,5 @@ const mapSongsDBToModel = ({
 
 module.exports = {
     mapAlbumsDBToModel,
-    mapSongsDBToModel
+    mapSongsDBToModel,
 };

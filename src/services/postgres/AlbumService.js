@@ -16,7 +16,6 @@ class AlbumService {
         this._pool = new Pool;
     }
 
-    //album service
     async addAlbum({
         name,
         year
@@ -46,7 +45,7 @@ class AlbumService {
 
         // mengambil data lagu dengan id album yang sesuai
         const songsQuery = {
-            text: 'SELECT * FROM songs WHERE album_id = $1',
+            text: 'SELECT songs.id, songs.title, songs.performer FROM songs WHERE album_id = $1',
             values: [id],
         };
         const songsResult = await this._pool.query(songsQuery);
@@ -58,6 +57,18 @@ class AlbumService {
 
         return album;
     }
+
+    // async getAlbumById(id) {
+    //     const query = {
+    //         text: `SELECT songs.id songs.title, songs.performer
+    //                 FROM songs
+    //                 JOIN albums ON songs.album_id = albums.id
+    //                 WHERE albums.id = $1`,
+    //         values: [id],
+    //     }
+    //     const result = await this._pool.query(query);
+    //     return result.rows.map(mapAlbumsDBToModel);
+    // }
 
     async editAlbumById(id, {
         name,
