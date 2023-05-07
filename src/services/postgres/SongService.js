@@ -1,4 +1,3 @@
-/* eslint-disable object-curly-newline */
 const {
   nanoid
 } = require('nanoid');
@@ -66,7 +65,7 @@ class SongsService {
       result = await this._pool.query(query);
     }
 
-    return result.rows.map(mapDBtoSongsModel);
+    return result.rows;
   }
 
   async getSongById(id) {
