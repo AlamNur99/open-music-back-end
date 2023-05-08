@@ -1,5 +1,4 @@
-const albumRoutes = (handler) => [
-  {
+const albumRoutes = (handler) => [{
     method: 'POST',
     path: '/albums',
     handler: handler.postAlbumHandler,

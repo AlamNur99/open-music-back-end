@@ -13,7 +13,11 @@ exports.up = pgm => {
         year: {
             type: 'INTEGER',
             notNull: true
-        }
+        },
+        cover_url: {
+            type: 'TEXT',
+            default: null,
+        },
     });
 };
 
