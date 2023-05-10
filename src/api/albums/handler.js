@@ -12,11 +12,11 @@ class AlbumsHandler {
     this._validator.validateAlbumPayload(request.payload);
     const {
       name,
-      year
+      year,
     } = request.payload;
     const result = await this._service.addAlbum({
       name,
-      year
+      year,
     });
 
     const response = h.response({
@@ -31,7 +31,7 @@ class AlbumsHandler {
 
   async getAlbumsByIdHandler(request) {
     const {
-      id
+      id,
     } = request.params;
     const result = await this._service.getSongsFromAlbumId(id);
     return {
@@ -46,14 +46,14 @@ class AlbumsHandler {
     this._validator.validateAlbumPayload(request.payload);
     const {
       name,
-      year
+      year,
     } = request.payload;
     const {
-      id
+      id,
     } = request.params;
     await this._service.editAlbumById(id, {
       name,
-      year
+      year,
     });
 
     return {
@@ -64,7 +64,7 @@ class AlbumsHandler {
 
   async deleteAlbumByIdHandler(request) {
     const {
-      id
+      id,
     } = request.params;
     await this._service.deleteAlbumById(id);
     return {
@@ -76,7 +76,7 @@ class AlbumsHandler {
   async postAlbumLikeByIdHandler(request, h) {
     const albumId = request.params.id;
     const {
-      id: userId
+      id: userId,
     } = request.auth.credentials;
 
     await this._service.isAlbumExist(albumId);
@@ -94,7 +94,7 @@ class AlbumsHandler {
   async deleteAlbumLikeByIdHandler(request) {
     const albumId = request.params.id;
     const {
-      id: userId
+      id: userId,
     } = request.auth.credentials;
 
     await this._service.isAlbumExist(albumId);
@@ -112,7 +112,7 @@ class AlbumsHandler {
     await this._service.isAlbumExist(albumId);
     const {
       likes,
-      isCache
+      isCache,
     } = await this._service.getAlbumLikesById(albumId);
 
     const response = h.response({

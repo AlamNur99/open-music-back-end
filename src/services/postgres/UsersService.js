@@ -1,8 +1,8 @@
 const {
-  nanoid
+  nanoid,
 } = require('nanoid');
 const {
-  Pool
+  Pool,
 } = require('pg');
 const bcrypt = require('bcrypt');
 const InvariantError = require('../../exceptions/InvariantError');
@@ -17,7 +17,7 @@ class UsersService {
   async addUser({
     username,
     password,
-    fullname
+    fullname,
   }) {
     await this.verifyNewUsername(username);
 
@@ -47,7 +47,7 @@ class UsersService {
 
     if (result.rowCount > 0) {
       throw new InvariantError(
-        'Gagal menambahkan User. Username telah digunakan'
+        'Gagal menambahkan User. Username telah digunakan',
       );
     }
   }
@@ -66,7 +66,7 @@ class UsersService {
 
     const {
       id,
-      password: hashedPassword
+      password: hashedPassword,
     } = result.rows[0];
 
     const match = await bcrypt.compare(password, hashedPassword);

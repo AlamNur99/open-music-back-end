@@ -1,18 +1,18 @@
 /* eslint-disable camelcase */
 
-exports.up = pgm => {
+exports.up = (pgm) => {
     pgm.createTable('albums', {
         id: {
             type: 'VARCHAR(50)',
-            primaryKey: true
+            primaryKey: true,
         },
         name: {
             type: 'TEXT',
-            notNull: true
+            notNull: true,
         },
         year: {
             type: 'INTEGER',
-            notNull: true
+            notNull: true,
         },
         cover_url: {
             type: 'TEXT',
@@ -21,6 +21,6 @@ exports.up = pgm => {
     });
 };
 
-exports.down = pgm => {
+exports.down = (pgm) => {
     pgm.dropTable('albums');
 };

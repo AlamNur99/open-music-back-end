@@ -6,7 +6,7 @@ class StorageService {
 
         if (!fs.existsSync(folder)) {
             fs.mkdirSync(folder, {
-                recursive: true
+                recursive: true,
             });
         }
     }

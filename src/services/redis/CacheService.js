@@ -6,7 +6,7 @@ class CacheService {
         this._client = redis.createClient({
             socket: {
                 host: config.redis.host,
-            }
+            },
         });
 
         this._client.on('error', (error) => {

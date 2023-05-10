@@ -19,8 +19,7 @@ const PlaylistValidator = {
     }
   },
   validateDeleteSongFromPlaylistPayload: (payload) => {
-    const validationResult =
-      DeleteSongFromPlaylistPayloadSchema.validate(payload);
+    const validationResult = DeleteSongFromPlaylistPayloadSchema.validate(payload);
     if (validationResult.error) {
       throw new InvariantError(validationResult.error.message);
     }

@@ -2,9 +2,9 @@ require('dotenv').config();
 const Hapi = require('@hapi/hapi');
 const Jwt = require('@hapi/jwt');
 const Inert = require('@hapi/inert');
+const path = require('path');
 const ClientError = require('./exceptions/ClientError');
 const config = require('./utils/config');
-const path = require('path');
 
 // albums
 const albums = require('./api/albums');
@@ -61,7 +61,7 @@ const init = async () => {
   const playlistsService = new PlaylistsService(collaborationsService);
   const playlistSongsService = new PlaylistSongsService(playlistsService);
   const storageService = new StorageService(
-    path.resolve(__dirname, 'api/uploads/file/images')
+    path.resolve(__dirname, 'api/uploads/file/images'),
   );
 
   const server = Hapi.server({
@@ -162,14 +162,14 @@ const init = async () => {
         service: storageService,
         albumsService,
         validator: UploadsValidator,
-      }
+      },
     },
   ]);
 
   server.ext('onPreResponse', (request, h) => {
     // mendapatkan konteks response dari request
     const {
-      response
+      response,
     } = request;
     if (response instanceof Error) {
       // penanganan client error secara internal.

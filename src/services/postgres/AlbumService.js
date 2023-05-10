@@ -1,13 +1,13 @@
 const {
-  nanoid
+  nanoid,
 } = require('nanoid');
 const {
-  Pool
+  Pool,
 } = require('pg');
 const InvariantError = require('../../exceptions/InvariantError');
 const NotFoundError = require('../../exceptions/NotFoundError');
 const {
-  mapDBtoAlbumModel
+  mapDBtoAlbumModel,
 } = require('../../utils');
 
 class AlbumsService {
@@ -18,7 +18,7 @@ class AlbumsService {
 
   async addAlbum({
     name,
-    year
+    year,
   }) {
     const id = `album-${nanoid(16)}`;
 
@@ -49,7 +49,7 @@ class AlbumsService {
     const result = await this._pool.query(query);
     return {
       ...album,
-      songs: result.rows
+      songs: result.rows,
     };
   }
 
@@ -68,7 +68,7 @@ class AlbumsService {
 
   async editAlbumById(id, {
     name,
-    year
+    year,
   }) {
     const query = {
       text: 'UPDATE albums SET name = $1, year = $2 WHERE id = $3 RETURNING id',

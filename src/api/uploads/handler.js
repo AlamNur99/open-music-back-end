@@ -12,10 +12,10 @@ class UploadsHandler {
 
     async postUploadImageHandler(request, h) {
         const {
-            cover
+            cover,
         } = request.payload;
         const {
-            id
+            id,
         } = request.params;
 
         this._validator.validateImageHeaders(cover.hapi.headers);

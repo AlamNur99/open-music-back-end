@@ -1,14 +1,14 @@
 const {
-  Pool
+  Pool,
 } = require('pg');
 const {
-  nanoid
+  nanoid,
 } = require('nanoid');
 const InvariantError = require('../../exceptions/InvariantError');
 const NotFoundError = require('../../exceptions/NotFoundError');
 const AuthorizationError = require('../../exceptions/AuthorizationError');
 const {
-  mapGetPlaylistActivitiesDBToModel
+  mapGetPlaylistActivitiesDBToModel,
 } = require('../../utils');
 
 class PlaylistsService {
@@ -138,7 +138,7 @@ class PlaylistsService {
         await this._collaborationsService.verifyCollaborator(id, userId);
       } catch {
         throw new AuthorizationError(
-          'Anda bukan merupakan kolaborator dari playlist ini'
+          'Anda bukan merupakan kolaborator dari playlist ini',
         );
       }
     }

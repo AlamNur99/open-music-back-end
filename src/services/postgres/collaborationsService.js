@@ -1,8 +1,8 @@
 const {
-  nanoid
+  nanoid,
 } = require('nanoid');
 const {
-  Pool
+  Pool,
 } = require('pg');
 const InvariantError = require('../../exceptions/InvariantError');
 

@@ -1,6 +1,6 @@
 const InvariantError = require('../../exceptions/InvariantError');
 const {
-    ImageHeadersSchema
+    ImageHeadersSchema,
 } = require('./schema');
 
 const UploadsValidator = {

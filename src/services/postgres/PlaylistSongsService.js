@@ -1,9 +1,9 @@
 const autoBind = require('auto-bind');
 const {
-  nanoid
+  nanoid,
 } = require('nanoid');
 const {
-  Pool
+  Pool,
 } = require('pg');
 const InvariantError = require('../../exceptions/InvariantError');
 const NotFoundError = require('../../exceptions/NotFoundError');
@@ -34,7 +34,7 @@ class PlaylistSongsService {
   async getSongsFromPlaylistId(playlistId, userId) {
     const playlists = await this._playlistsService.getPlaylistById(
       userId,
-      playlistId
+      playlistId,
     );
     const query = {
       text: `SELECT songs.id, songs.title, songs.performer
@@ -52,7 +52,7 @@ class PlaylistSongsService {
 
     return {
       ...playlists,
-      songs: result.rows
+      songs: result.rows,
     };
   }
 
@@ -68,7 +68,7 @@ class PlaylistSongsService {
 
     if (!result.rowCount) {
       throw new NotFoundError(
-        'Gagal menghapus lagu dari playlist. Id tidak ditemukan'
+        'Gagal menghapus lagu dari playlist. Id tidak ditemukan',
       );
     }
   }
