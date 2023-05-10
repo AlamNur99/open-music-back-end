@@ -39,7 +39,7 @@ class UsersService {
 
   async verifyNewUsername(username) {
     const query = {
-      text: 'select username FROM users WHERE username = $1',
+      text: 'SELECT username FROM users WHERE username = $1',
       values: [username],
     };
 
