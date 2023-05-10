@@ -104,7 +104,6 @@ class PlaylistsHandler {
         playlistId,
         userId
       );
-    // const result = await this._playlistsService.getPlaylistById(playlistId);
 
     const response = h.response({
       status: 'success',
