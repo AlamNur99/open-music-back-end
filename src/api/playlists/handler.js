@@ -156,12 +156,7 @@ class PlaylistsHandler {
             status: 'success',
             data: {
                 playlistId,
-                activities: activitiesFiltered.map((activity) => ({
-                    username: activity.username,
-                    title: activity.title,
-                    action: activity.action,
-                    time: activity.time,
-                })),
+                activities: activitiesFiltered,
             },
         };
     }
