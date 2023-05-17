@@ -6,9 +6,6 @@ const {
 } = require('pg');
 const InvariantError = require('../../exceptions/InvariantError');
 const NotFoundError = require('../../exceptions/NotFoundError');
-const {
-  mapDBtoAlbumModel,
-} = require('../../utils');
 
 class AlbumsService {
   constructor(cacheService) {
@@ -36,34 +33,32 @@ class AlbumsService {
     return result.rows[0].id;
   }
 
-  async getSongsFromAlbumId(albumId) {
-    const album = await this.getAlbumById(albumId);
-    const query = {
-      text: `SELECT songs.id, songs.title, songs.performer
-      FROM albums
-      INNER JOIN songs ON songs.album_id = albums.id
-      WHERE albums.id = $1`,
-      values: [albumId],
-    };
-
-    const result = await this._pool.query(query);
-    return {
-      ...album,
-      songs: result.rows,
-    };
-  }
-
   async getAlbumById(id) {
     const query = {
       text: 'SELECT * FROM albums WHERE id = $1',
       values: [id],
     };
-    const result = await this._pool.query(query);
-    if (!result.rowCount) {
+    const albumResult = await this._pool.query(query);
+    if (!albumResult.rowCount) {
       throw new NotFoundError('Album tidak ditemukan');
     }
 
-    return mapDBtoAlbumModel(result.rows[0]);
+    const album = albumResult.rows[0];
+
+    const querySongs = {
+      text: `SELECT songs.id, songs.title, songs.performer
+      FROM albums
+      INNER JOIN songs ON songs.album_id = albums.id
+      WHERE albums.id = $1`,
+      values: [id],
+    };
+
+    const songs = await this._pool.query(querySongs);
+
+    return {
+      ...album,
+      songs: songs.rows,
+    };
   }
 
   async editAlbumById(id, {
@@ -123,7 +118,6 @@ class AlbumsService {
     await this._cacheService.delete(`user_album_likes:${albumId}`);
 
     return result.rows[0].id;
-    // return 'Berhasil Menyukai album';
   }
 
   async deleteAlbumLikeById(albumId, userId) {
@@ -181,19 +175,6 @@ class AlbumsService {
     if (result.rowCount > 0) {
       throw new InvariantError('Gagal Menyukai lagu, karena sudah menyukai sebelumya');
     }
-  }
-
-  async isAlbumExist(id) {
-    const query = {
-      text: 'SELECT * from albums WHERE id = $1',
-      values: [id],
-    };
-    const result = await this._pool.query(query);
-    if (!result.rowCount) {
-      throw new NotFoundError('Album tidak ditemukan');
-    }
-
-    return result.rows[0];
   }
 }
 

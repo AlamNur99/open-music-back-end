@@ -33,7 +33,7 @@ class AlbumsHandler {
     const {
       id,
     } = request.params;
-    const result = await this._service.getSongsFromAlbumId(id);
+    const result = await this._service.getAlbumById(id);
     return {
       status: 'success',
       data: {
@@ -79,7 +79,7 @@ class AlbumsHandler {
       id: userId,
     } = request.auth.credentials;
 
-    await this._service.isAlbumExist(albumId);
+    await this._service.getAlbumById(albumId);
     await this._service.verifyUserLike(albumId, userId);
     await this._service.addAlbumLikeById(albumId, userId);
 
@@ -97,7 +97,7 @@ class AlbumsHandler {
       id: userId,
     } = request.auth.credentials;
 
-    await this._service.isAlbumExist(albumId);
+    await this._service.getAlbumById(albumId);
     await this._service.deleteAlbumLikeById(albumId, userId);
 
     return {
@@ -109,7 +109,7 @@ class AlbumsHandler {
   async getAlbumLikeByIdhandler(request, h) {
     const albumId = request.params.id;
 
-    await this._service.isAlbumExist(albumId);
+    await this._service.getAlbumById(albumId);
     const {
       likes,
       isCache,
